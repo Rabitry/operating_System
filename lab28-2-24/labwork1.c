@@ -17,6 +17,10 @@ int main(){
                 char buffer[100];
                 int n = read(STDOUT_FILENO, &buffer, sizeof(buffer));
                 buffer[n]='\0';
+                 if (strcmp(buffer, "bye\n") == 0) {
+                        printf("Received Bye Now Terminate\n");
+                        break;
+                    }
                 for(int i = 0; i < 100000; i++) {}
 
                 write(open_id, buffer, strlen(buffer));
@@ -26,14 +30,21 @@ int main(){
 
                 int read_after_write = read(open_id, &buffer, sizeof(buffer));
                 buffer[read_after_write] = '\0';
-                for(int i = 0; i < 100000; i++) {}
-                
-                write(STDOUT_FILENO, msg2, strlen(msg2));
+                    if (strcmp(buffer, "bye\n") == 0) {
+                        printf("Received Bye Now Terminate\n");
+                        break;
+                    }
+                for(int i = 0; i < 100000; i++) {}  
+                write(STDOUT_FILENO, msg2, strlen(msg2));//myfriend
                 write(STDOUT_FILENO, buffer, strlen(buffer));
                 for(int i = 0; i < 100000; i++) {}
-                write(STDOUT_FILENO, msg, strlen(msg));
+                write(STDOUT_FILENO, msg, strlen(msg));//me
                 int n = read(STDOUT_FILENO, &buffer, sizeof(buffer));
                 buffer[n]='\0';
+                if (strcmp(buffer, "bye\n") == 0) {
+                        printf("Received Bye Now Terminate\n");
+                        break;
+                    } 
                 for(int i = 0; i < 100000; i++) {}
                 write(open_id, buffer, strlen(buffer));
                 for(int i = 0; i < 100000; i++) {}

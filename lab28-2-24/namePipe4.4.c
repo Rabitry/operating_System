@@ -4,23 +4,27 @@
 #include <string.h>
 #include <unistd.h>
 int main(){
-    char *pipePath;
-    int pipeFlag,fd;
-    pipePath="/home/rabitry/op_s/group11";
-    if(access(pipePath,F_OK)==0){
-         printf("%s is already created, so new pipe will not be created\n",pipePath);
-    }
-    else{
-        pipeFlag=mkfifo(pipePath,0666);
-        if(pipeFlag<0){
-            printf("Error in created a named pipe\n");
-            exit(-1);
-        }
-        else{
-            printf("pipe has been created successfully\n");
-        }
-    }
+    char *pipe = "group11";
+    int open_id = open(pipe, O_RDWR);
 
-    
+    char *msg;
+    char input[100];
+    int n,c;
+    msg="Insert a number :";
+    write(STDOUT_FILENO,msg,strlen(msg)+1);
+    n=read(STDOUT_FILENO,&input,sizeof(input));
+    input[n]='\0';
+    //write(STDOUT_FILENO,buffer,strlen(buffer));
 
+
+    //char *msg = "hello arif. how are you";
+    write(open_id, input, strlen(input));
+
+    char buffer[100];
+    int read_after_write = read(open_id, &buffer, sizeof(buffer));
+    buffer[read_after_write] = '\0';
+
+    printf("write into pipe is:%s\n", buffer);
+
+    close(open_id);
 }
